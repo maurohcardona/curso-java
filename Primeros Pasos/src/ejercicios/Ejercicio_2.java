@@ -2,6 +2,8 @@ package ejercicios;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.geom.Rectangle2D;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 
 import javax.swing.*;
@@ -107,7 +109,7 @@ class LaminaEjercicio2 extends JPanel{
         g_mensaje.add(icono);
         g_mensaje.add(componente);
         g_mensaje.add(otros);
-        g_mensaje.add(o_object);
+        g_mensaje.add(m_object);
 
         g_confirmar.add(default_option);
         g_confirmar.add(yes_no_option);
@@ -139,7 +141,7 @@ class LaminaEjercicio2 extends JPanel{
         c_mensaje.add(icono);
         c_mensaje.add(componente);
         c_mensaje.add(otros);
-        c_mensaje.add(o_object);
+        c_mensaje.add(m_object);
         c_mensaje.setBorder(new TitledBorder("Mensaje"));
 
         c_confirmar.add(default_option);
@@ -159,7 +161,7 @@ class LaminaEjercicio2 extends JPanel{
 
         r_mensaje.setActionCommand("Mensaje");
         r_confirmar.setActionCommand("Confirmar");
-        r_opcion.setActionCommand("Opción");
+        r_opcion.setActionCommand("Opcion");
         r_entrada.setActionCommand("Entrada");
 
         error_message.setActionCommand("Error");
@@ -181,7 +183,8 @@ class LaminaEjercicio2 extends JPanel{
 
         string.setActionCommand("String[]");
         icon.setActionCommand("Icon[]");
-        o_object.setActionCommand("Object[]");campo_texto.setActionCommand("Campo de texto");
+        o_object.setActionCommand("Object[]");
+        campo_texto.setActionCommand("Campo de texto");
         combo.setActionCommand("Combo");
 
         add(c_tipo);
@@ -192,15 +195,124 @@ class LaminaEjercicio2 extends JPanel{
         add(c_entrada);
     }
 
+    private String cadena_mensaje = "Mensaje de ejemplo";
+    private Icon icono_mensaje = new ImageIcon("Primeros Pasos/src/graficos/icono.png");
+    private Object objetoMensaje = new Date();
+    private Component componenteMensaje = new LamninaEjemplo();
+
+    public Object dame_mensaje() {
+        String s = g_mensaje.getSelection().getActionCommand();
+        if (s.equals("Cadena")) {
+            return cadena_mensaje;
+        } else if (s.equals("Icono")) {
+            return icono_mensaje;
+        } else if (s.equals("Componente")) {
+            return componenteMensaje;
+        } else if (s.equals("Otros")) {
+            return objetoMensaje;
+        }else if (s.equals("Object[]")){
+            return new Object[]{cadena_mensaje, icono_mensaje, componenteMensaje, objetoMensaje};
+        } else {
+            return null;
+        }
+    }
+
+    public int dame_tipo_mensaje() {
+        String s = g_tipo_mensaje.getSelection().getActionCommand();
+        if (s.equals("Error")) {
+            return JOptionPane.ERROR_MESSAGE;
+        } else if (s.equals("Información")) {
+            return JOptionPane.INFORMATION_MESSAGE;
+        } else if (s.equals("Advertencia")) {
+            return JOptionPane.WARNING_MESSAGE;
+        } else if (s.equals("Pregunta")) {
+            return JOptionPane.QUESTION_MESSAGE;
+        } else {
+            return JOptionPane.PLAIN_MESSAGE;
+        }
+    }
+
+    public int dame_confirmar() {
+        String s = g_confirmar.getSelection().getActionCommand();
+        if (s.equals("Default")) {
+            return JOptionPane.DEFAULT_OPTION;
+        } else if (s.equals("Yes/No")) {
+            return JOptionPane.YES_NO_OPTION;
+        } else if (s.equals("Yes/No/Cancel")) {
+            return JOptionPane.YES_NO_CANCEL_OPTION;
+        } else if (s.equals("Ok/Cancel")) {
+            return JOptionPane.OK_CANCEL_OPTION;
+        } else {
+            return JOptionPane.DEFAULT_OPTION;
+        }
+    }
+
+    public Object[] dame_opcion(){
+
+        String s = g_opcion.getSelection().getActionCommand();
+        String[] string_opcion = {"azul", "amarillo", "rojo"};
+        Icon[] icon_opcion = {
+            new ImageIcon("Primeros Pasos\\src\\graficos\\amarillo.jpg"),
+            new ImageIcon("Primeros Pasos\\src\\graficos\\azul.jpg"),
+            new ImageIcon("Primeros Pasos\\src\\graficos\\rojo.jpg")
+        };
+        Object[] object_opcion = {cadena_mensaje, icono_mensaje,objetoMensaje};
+
+        if(s.equals("String[]"))
+            return string_opcion;
+        else if(s.equals("Icon[]"))
+            return icon_opcion;
+        else if(s.equals("Object[]"))
+            return object_opcion;
+        else return null;
+    }
      
     class AccionEnviar implements ActionListener {
         
         public void actionPerformed(ActionEvent e) {
            
-            ButtonModel boton = g_tipo.getSelection();
-            String s = boton.getActionCommand();
-            JOptionPane.showMessageDialog(null,s);
+            ButtonModel tipo = g_tipo.getSelection();
+            String s = tipo.getActionCommand();
             
+            if(s.equals("Mensaje")){
+
+                    JOptionPane.showMessageDialog(LaminaEjercicio2.this, dame_mensaje(), s, dame_tipo_mensaje());
+            }
+            else if(s.equals("Confirmar")){
+
+                JOptionPane.showConfirmDialog(LaminaEjercicio2.this, dame_mensaje(), s, dame_confirmar(), dame_tipo_mensaje());
+            }
+            else if(s.equals("Opcion")){
+
+                JOptionPane.showOptionDialog(LaminaEjercicio2.this, dame_mensaje(), s, 1, dame_tipo_mensaje(), null, dame_opcion(), s);
+            }
+            else if(s.equals("Entrada")){
+
+                if(g_entrada.getSelection().getActionCommand().equals("Campo de texto")){
+
+                    JOptionPane.showInputDialog(LaminaEjercicio2.this, dame_mensaje(), s, dame_tipo_mensaje());
+                }
+                else{
+                    JOptionPane.showInputDialog(LaminaEjercicio2.this, dame_mensaje(), s, dame_tipo_mensaje(), null, new String[]{"Rojo", "Azul", "Amerillo"}, "Rojo");
+                }
+
+            }
         }  
     }        
+}
+
+class LamninaEjemplo extends JPanel {
+    
+    public void paintComponent(Graphics g) {
+        
+        super.paintComponent(g);
+       
+        Graphics2D g2 = (Graphics2D) g;
+
+        Rectangle2D rectangulo = new Rectangle2D.Double(0,0,getWidth(),getHeight());
+
+        g2.setPaint(Color.YELLOW);
+
+        g2.fill(rectangulo);
+    }
 }
