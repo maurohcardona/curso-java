@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Excepciones",
+            "request": "launch",
+            "mainClass": "cosasbasicas.Excepciones",
+            "projectName": "Primeros Pasos"
+        },
+        {
+            "type": "java",
+            "name": "Ejercicio_2",
+            "request": "launch",
+            "mainClass": "ejercicios.Ejercicio_2",
+            "projectName": "Primeros Pasos"
+        },
+        {
+            "type": "java",
             "name": "Barra_herramientas",
             "request": "launch",
             "mainClass": "graficos.Barra_herramientas",
