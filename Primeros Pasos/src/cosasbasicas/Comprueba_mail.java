@@ -1,3 +1,5 @@
+package cosasbasicas;
+
 import javax.swing.JOptionPane;
 
 public class Comprueba_mail {

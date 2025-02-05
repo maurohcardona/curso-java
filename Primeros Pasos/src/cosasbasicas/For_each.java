@@ -1,3 +1,5 @@
+package cosasbasicas;
+
 import java.util.Random;
 
 public class For_each {

@@ -1,3 +1,5 @@
+package cosasbasicas;
+
 import java.util.*;
 
 public class Enum {

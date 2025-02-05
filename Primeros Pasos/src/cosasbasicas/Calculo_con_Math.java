@@ -1,3 +1,5 @@
+package cosasbasicas;
+
 public class Calculo_con_Math {
     public static void main(String[] args) {
         
