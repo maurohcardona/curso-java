@@ -1,3 +1,5 @@
+package cosasbasicas;
+
 import javax.swing.JOptionPane;
 
 public class Entrada_ejemplo_2 {

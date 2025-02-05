@@ -1,3 +1,4 @@
+package cosasbasicas;
 public class Arrays_bidimencionales_2 {
     public static void main(String[] args) {
         

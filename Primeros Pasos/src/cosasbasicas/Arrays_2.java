@@ -1,3 +1,4 @@
+package cosasbasicas;
 import javax.swing.JOptionPane;
 
 public class Arrays_2 {

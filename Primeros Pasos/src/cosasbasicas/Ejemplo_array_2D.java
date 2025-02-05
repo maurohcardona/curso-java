@@ -1,3 +1,5 @@
+package cosasbasicas;
+
 public class Ejemplo_array_2D {
     public static void main(String[] args) {
         

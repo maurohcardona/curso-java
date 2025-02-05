@@ -1,3 +1,4 @@
+package cosasbasicas;
 import java.util.Scanner;
 
 import javax.swing.JOptionPane;
