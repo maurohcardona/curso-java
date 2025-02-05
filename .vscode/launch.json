@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Pruebas_Rutas",
+            "request": "launch",
+            "mainClass": "cosasbasicas.Pruebas_Rutas",
+            "projectName": "Primeros Pasos"
+        },
+        {
+            "type": "java",
+            "name": "Lectura_escritura",
+            "request": "launch",
+            "mainClass": "cosasbasicas.Lectura_escritura",
+            "projectName": "Primeros Pasos"
+        },
+        {
+            "type": "java",
             "name": "Excepciones",
             "request": "launch",
             "mainClass": "cosasbasicas.Excepciones",
