@@ -1,4 +1,4 @@
-package cosasbasicas;
+package acceso_ficheros;
 
 import java.io.File;
 

@@ -8,7 +8,7 @@ public class Escribir_fichero {
         
         Escribiendo escribiendo = new Escribiendo();
         
-        escribiendo.escribir();
+        escribiendo.escribir("/home/mauro/Desktop/Texto2", true);
     }
 }
 
@@ -16,13 +16,13 @@ public class Escribir_fichero {
 class Escribiendo {
     
 
-    public void escribir() {
+    public void escribir(String ruta, boolean append) {
 
         String frase = "Esto es una prueba de escritura 2";
 
         try {
             
-            FileWriter escritura = new FileWriter("/home/mauro/Desktop/Texto2", true);
+            FileWriter escritura = new FileWriter(ruta, append);
 
             for (int i = 0; i < frase.length(); i++) {
                 

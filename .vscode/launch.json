@@ -6,6 +6,34 @@
     "configurations": [
         {
             "type": "java",
+            "name": "UsoPareja",
+            "request": "launch",
+            "mainClass": "progaramacion_generica.clases_propias.UsoPareja",
+            "projectName": "Primeros Pasos"
+        },
+        {
+            "type": "java",
+            "name": "UsoEmpleado",
+            "request": "launch",
+            "mainClass": "progaramacion_generica.UsoEmpleado",
+            "projectName": "Primeros Pasos"
+        },
+        {
+            "type": "java",
+            "name": "Eliminando",
+            "request": "launch",
+            "mainClass": "acceso_ficheros.Eliminando",
+            "projectName": "Primeros Pasos"
+        },
+        {
+            "type": "java",
+            "name": "Creando",
+            "request": "launch",
+            "mainClass": "acceso_ficheros.Creando",
+            "projectName": "Primeros Pasos"
+        },
+        {
+            "type": "java",
             "name": "Pruebas_Rutas",
             "request": "launch",
             "mainClass": "cosasbasicas.Pruebas_Rutas",
