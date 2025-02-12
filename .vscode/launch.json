@@ -6,6 +6,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "UsoThreads",
+            "request": "launch",
+            "mainClass": "programacion_concurrente.threads.UsoThreads",
+            "projectName": "Primeros Pasos"
+        },
+        {
+            "type": "java",
+            "name": "HerenciaGenericos",
+            "request": "launch",
+            "mainClass": "progaramacion_generica.clases_propias.HerenciaGenericos",
+            "projectName": "Primeros Pasos"
+        },
+        {
+            "type": "java",
+            "name": "MetodosGenericos",
+            "request": "launch",
+            "mainClass": "progaramacion_generica.clases_propias.MetodosGenericos",
+            "projectName": "Primeros Pasos"
+        },
+        {
+            "type": "java",
             "name": "UsoPareja",
             "request": "launch",
             "mainClass": "progaramacion_generica.clases_propias.UsoPareja",
