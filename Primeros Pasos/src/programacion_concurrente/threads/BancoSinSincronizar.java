@@ -1,5 +1,6 @@
 package programacion_concurrente.threads;
 
+import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 
 import java.util.concurrent.locks.ReentrantLock;
@@ -21,21 +22,36 @@ public class BancoSinSincronizar {
 class Banco {
 
     public Banco() {
+
         cuentas = new double[100];
         for (int i = 0; i < cuentas.length; i++) {
             cuentas[i] = 2000;
         }
+
+        saldoSuficiente = cerrojo.newCondition();
     }
 
-    public void transferencia(int cuentaOrigen, int cuentaDestino, double cantidad) {
+    public void transferencia(int cuentaOrigen, int cuentaDestino, double cantidad) throws InterruptedException {
+        
         cerrojo.lock();
-        if (cuentas[cuentaOrigen] < cantidad) return;
-        System.out.println(Thread.currentThread());
-        cuentas[cuentaOrigen] -= cantidad;
-        System.out.printf("%10.2f de %d para %d ", cantidad, cuentaOrigen, cuentaDestino);
-        cuentas[cuentaDestino] += cantidad;
-        System.out.printf("Saldo total: %10.2f%n", getSaldoTotal());
-        cerrojo.unlock();
+        
+        try {
+            while(cuentas[cuentaOrigen] < cantidad) {
+                
+                saldoSuficiente.await();
+            }
+
+            System.out.println(Thread.currentThread());
+            cuentas[cuentaOrigen] -= cantidad;
+            System.out.printf("%10.2f de %d para %d ", cantidad, cuentaOrigen, cuentaDestino);
+            cuentas[cuentaDestino] += cantidad;
+            System.out.printf("Saldo total: %10.2f%n", getSaldoTotal());
+            saldoSuficiente.signalAll();
+        
+        } finally {
+            
+            cerrojo.unlock();
+        }
     }
 
     public double getSaldoTotal() {
@@ -50,6 +66,8 @@ class Banco {
     private final double[] cuentas;
 
     private Lock cerrojo = new ReentrantLock();
+
+    private Condition saldoSuficiente;
 }
 
 class EjecucionTransferencias implements Runnable {
@@ -68,12 +86,14 @@ class EjecucionTransferencias implements Runnable {
     public void run() {
         try {
             while (true) {
+
                 int paraLaCuenta = (int) (100 * Math.random());
                 double cantidad = cantidadMax * Math.random();
                 banco.transferencia(deLaCuenta, paraLaCuenta, cantidad);
                 Thread.sleep(5000);
             }
         } catch (InterruptedException e) {
+
             e.printStackTrace();
         }
     }

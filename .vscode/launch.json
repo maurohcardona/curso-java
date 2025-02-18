@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "BancoSinSincronizar",
+            "request": "launch",
+            "mainClass": "programacion_concurrente.threads.BancoSinSincronizar",
+            "projectName": "Primeros Pasos"
+        },
+        {
+            "type": "java",
             "name": "UsoThreads",
             "request": "launch",
             "mainClass": "programacion_concurrente.threads.UsoThreads",
