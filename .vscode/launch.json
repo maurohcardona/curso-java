@@ -6,6 +6,76 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Servidor",
+            "request": "launch",
+            "mainClass": "sockets.juan_sockects.Servidor",
+            "projectName": "Primeros Pasos"
+        },
+        {
+            "type": "java",
+            "name": "Cliente",
+            "request": "launch",
+            "mainClass": "sockets.juan_sockects.Cliente",
+            "projectName": "Primeros Pasos"
+        },
+        {
+            "type": "java",
+            "name": "Cliente",
+            "request": "launch",
+            "mainClass": "Cliente",
+            "projectName": "Primeros Pasos"
+        },
+        {
+            "type": "java",
+            "name": "PruebaMapas",
+            "request": "launch",
+            "mainClass": "colecciones.src.PruebaMapas",
+            "projectName": "Primeros Pasos"
+        },
+        {
+            "type": "java",
+            "name": "PruebaTreeSet",
+            "request": "launch",
+            "mainClass": "ejercicios.PruebaTreeSet",
+            "projectName": "Primeros Pasos"
+        },
+        {
+            "type": "java",
+            "name": "PruebaListaEnlazada",
+            "request": "launch",
+            "mainClass": "colecciones.src.PruebaListaEnlazada",
+            "projectName": "Primeros Pasos"
+        },
+        {
+            "type": "java",
+            "name": "PruebaLinkedList",
+            "request": "launch",
+            "mainClass": "colecciones.src.PruebaLinkedList",
+            "projectName": "Primeros Pasos"
+        },
+        {
+            "type": "java",
+            "name": "UsoLibro",
+            "request": "launch",
+            "mainClass": "colecciones.src.UsoLibro",
+            "projectName": "Primeros Pasos"
+        },
+        {
+            "type": "java",
+            "name": "Calcula_areas",
+            "request": "launch",
+            "mainClass": "cosasbasicas.Calcula_areas",
+            "projectName": "Primeros Pasos"
+        },
+        {
+            "type": "java",
+            "name": "CuentasUsuarios",
+            "request": "launch",
+            "mainClass": "colecciones.src.CuentasUsuarios",
+            "projectName": "Primeros Pasos"
+        },
+        {
+            "type": "java",
             "name": "BancoSinSincronizar",
             "request": "launch",
             "mainClass": "programacion_concurrente.threads.BancoSinSincronizar",

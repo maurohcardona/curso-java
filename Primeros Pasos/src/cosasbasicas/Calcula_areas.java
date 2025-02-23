@@ -12,6 +12,8 @@ public class Calcula_areas {
 
         int forma = entrada.nextInt();
 
+        entrada.close();
+
         switch (forma) {
             case 1: 
 

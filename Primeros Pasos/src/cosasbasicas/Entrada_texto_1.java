@@ -16,6 +16,8 @@ public class Entrada_texto_1 {
 
         int edad_usuario = entrada.nextInt();
 
+        entrada.close();
+
         System.out.println("Hola " + nombre_usuario + " tu edad es de " + edad_usuario + " anos");
 
 	}

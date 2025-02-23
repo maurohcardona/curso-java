@@ -11,6 +11,8 @@ public class Evalua_edad {
         
         int edad = entrada.nextInt();
 
+        entrada.close();
+
         if (edad <= 18) {
             System.out.println("Eres menor de edad");
         } else if ( edad < 40){

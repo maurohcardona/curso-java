@@ -28,17 +28,19 @@ class Banco {
             cuentas[i] = 2000;
         }
 
-        saldoSuficiente = cerrojo.newCondition();
+        //saldoSuficiente = cerrojo.newCondition();
     }
 
-    public void transferencia(int cuentaOrigen, int cuentaDestino, double cantidad) throws InterruptedException {
+    public synchronized void transferencia(int cuentaOrigen, int cuentaDestino, double cantidad) throws InterruptedException {
         
-        cerrojo.lock();
+        //cerrojo.lock();
         
-        try {
+        //try {
             while(cuentas[cuentaOrigen] < cantidad) {
                 
-                saldoSuficiente.await();
+                //saldoSuficiente.await();
+
+                wait();
             }
 
             System.out.println(Thread.currentThread());
@@ -46,12 +48,13 @@ class Banco {
             System.out.printf("%10.2f de %d para %d ", cantidad, cuentaOrigen, cuentaDestino);
             cuentas[cuentaDestino] += cantidad;
             System.out.printf("Saldo total: %10.2f%n", getSaldoTotal());
-            saldoSuficiente.signalAll();
+            //saldoSuficiente.signalAll();
+            notifyAll();
         
-        } finally {
+    //     } finally {  
             
-            cerrojo.unlock();
-        }
+    //         cerrojo.unlock();
+    //     }
     }
 
     public double getSaldoTotal() {
@@ -65,9 +68,9 @@ class Banco {
 
     private final double[] cuentas;
 
-    private Lock cerrojo = new ReentrantLock();
+    //private Lock cerrojo = new ReentrantLock();
 
-    private Condition saldoSuficiente;
+    //private Condition saldoSuficiente;
 }
 
 class EjecucionTransferencias implements Runnable {

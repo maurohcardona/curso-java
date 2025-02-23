@@ -29,6 +29,8 @@ public class Enum {
 
         String entrada_datos = entrada.next().toUpperCase();
 
+        entrada.close();
+
         Talla la_talla = Enum.Talla.valueOf(Talla.class, entrada_datos);
 
         System.out.println("Talla= " + la_talla);
