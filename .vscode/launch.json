@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "MenuConJList",
+            "request": "launch",
+            "mainClass": "MenuConJList",
+            "projectName": "Primeros Pasos"
+        },
+        {
+            "type": "java",
             "name": "Servidor",
             "request": "launch",
             "mainClass": "sockets.juan_sockects.Servidor",
