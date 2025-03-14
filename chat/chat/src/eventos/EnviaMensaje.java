@@ -24,19 +24,15 @@ public class EnviaMensaje implements ActionListener {
     }
     public void actionPerformed(ActionEvent e) {
 
-        StyledDocument doc = lamina.getCampoChat().getStyledDocument();
-
-        SimpleAttributeSet userStyle = new SimpleAttributeSet();
-
-        StyleConstants.setForeground(userStyle, Color.BLUE);
+        
         
         try {
 
             InetAddress miIp = InetAddress.getLocalHost();
 
-            doc.insertString(doc.getLength(), "\n" + lamina.getNickname() + ": " + lamina.getMensaje(), userStyle);
+            lamina.getCampoChat().append("\n" + lamina.getNickname() + ": " + lamina.getMensaje() + " para " + lamina.getDestinatari());
             
-            Socket miSocket = new Socket("192.168.100.235", 9999);
+            Socket miSocket = new Socket("192.168.1.188", 9999);
 
             PaqueteEnvio datos = new PaqueteEnvio(lamina.getMensaje(), lamina.getNickname(), miIp.getHostAddress(), lamina.getSelectedIp());
 

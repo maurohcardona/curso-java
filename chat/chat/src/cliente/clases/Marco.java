@@ -4,13 +4,13 @@ import javax.swing.JFrame;
 
 public class Marco extends JFrame {
 
-    public Marco(Lamina miLamina) {
+    public Marco() {
 
-        setBounds(600, 300, 250, 350);
+        setBounds(600, 300, 350, 450);
         setTitle("Chat");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        add(miLamina);
-        addWindowListener(new EnvioOnline(miLamina));
+        
+        
         
     }
     

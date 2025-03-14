@@ -56,4 +56,9 @@ public class PaqueteEnvio implements Serializable {
         lista_ips.put(nickName, ip_propio);
     }
 
+    public void setearMap(HashMap<String,String> nueva_lista) {
+
+        lista_ips = nueva_lista;
+    }
+
 }

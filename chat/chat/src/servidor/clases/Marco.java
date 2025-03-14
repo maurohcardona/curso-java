@@ -55,26 +55,8 @@ public class Marco extends JFrame implements Runnable{
                 ObjectInputStream paquete_datos = new ObjectInputStream(miSocket.getInputStream());
 
                 PaqueteEnvio paquete_recibido = (PaqueteEnvio) paquete_datos.readObject();
-
-                if(!paquete_recibido.getMessage().equals(" online")) {
-
-                    System.out.println(paquete_recibido.getIpDestinatario());
-
-                    areaTexto.append("\n" + paquete_recibido.getNickname() + ": " + paquete_recibido.getMessage() + " para " + paquete_recibido.getIpDestinatario());
-
-                    Socket enviaDestinatario = new Socket(paquete_recibido.getIpDestinatario(), 9090);
-
-                    ObjectOutputStream paquete_reenvio = new ObjectOutputStream(enviaDestinatario.getOutputStream());
-
-                    paquete_reenvio.writeObject(paquete_recibido);
-
-                    paquete_reenvio.close();
-
-				    enviaDestinatario.close();
-
-				    miSocket.close();
                 
-                } else {
+                if(paquete_recibido.getMessage().equals(" online")) {
 
                     areaTexto.append("\n" + paquete_recibido.getNickname() + " IP: " + paquete_recibido.getIpPropio() + " se ha conectado");
 
@@ -97,6 +79,45 @@ public class Marco extends JFrame implements Runnable{
                         miSocket.close();
                         
                     }
+                } else if (paquete_recibido.getMessage().equals(" offline")){
+
+                    areaTexto.append("\n" + paquete_recibido.getNickname() + " IP: " + paquete_recibido.getIpPropio() + " se ha desconectado");
+                   
+                    lista_ips.remove(paquete_recibido.getNickname());
+
+                    paquete_recibido.setearMap(lista_ips);
+
+                    for(Map.Entry<String,String> usuario : lista_ips.entrySet()){
+
+                        Socket envioDestinatario = new Socket(usuario.getValue(), 9090);
+
+                        ObjectOutputStream paquete_reenvio = new ObjectOutputStream(envioDestinatario.getOutputStream());
+
+                        paquete_reenvio.writeObject(paquete_recibido);
+
+                        paquete_reenvio.close();
+                        
+                        envioDestinatario.close();
+
+                        miSocket.close();
+
+                    }
+
+                } else {
+
+                    areaTexto.append("\n" + paquete_recibido.getNickname() + ": " + paquete_recibido.getMessage() + " para " + paquete_recibido.getIpDestinatario());
+
+                    Socket enviaDestinatario = new Socket(paquete_recibido.getIpDestinatario(), 9090);
+
+                    ObjectOutputStream paquete_reenvio = new ObjectOutputStream(enviaDestinatario.getOutputStream());
+
+                    paquete_reenvio.writeObject(paquete_recibido);
+
+                    paquete_reenvio.close();
+
+                    enviaDestinatario.close();
+
+                    miSocket.close();
                 }
             }
         } catch (Exception e) {

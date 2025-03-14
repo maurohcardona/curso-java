@@ -21,7 +21,7 @@ public class EnvioOnline extends WindowAdapter {
 
         try {
             
-            Socket miSocket = new Socket("192.168.100.235", 9999);
+            Socket miSocket = new Socket("192.168.1.188", 9999);
 
             InetAddress miIP= InetAddress.getLocalHost();
 
@@ -37,6 +37,29 @@ public class EnvioOnline extends WindowAdapter {
 
         } catch (Exception e1) {
             
+            System.err.println(e1.getMessage());
+        }
+    }
+
+    public void windowClosing(WindowEvent e) {
+
+        try {
+            Socket miSocket = new Socket("192.168.1.188", 9999);
+    
+            InetAddress miIP = InetAddress.getLocalHost();
+    
+            PaqueteEnvio datos = new PaqueteEnvio(" offline", miLamina.getNickname(), miIP.getHostAddress(), miLamina.getSelectedIp());
+    
+            ObjectOutputStream paquete_datos = new ObjectOutputStream(miSocket.getOutputStream());
+
+            datos.setMapIp(miLamina.getNickname(), miIP.getHostAddress());
+    
+            paquete_datos.writeObject(datos);
+    
+            miSocket.close();
+
+        } catch (Exception e1) {
+
             System.err.println(e1.getMessage());
         }
     }
