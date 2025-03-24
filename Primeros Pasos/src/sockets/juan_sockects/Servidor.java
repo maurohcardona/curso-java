@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
@@ -49,10 +50,12 @@ class MarcoServidor extends JFrame implements Runnable{
 	
 	private	JTextArea areatexto;
 
+	private ArrayList<String> lista_ip = new ArrayList<String>();
+
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		System.out.println("Estoy a la escucha");
+			
 
 		try {
 
@@ -65,12 +68,6 @@ class MarcoServidor extends JFrame implements Runnable{
 			while (true) {
 				Socket misocket = servidor.accept();
 
-				InetAddress localizacion = misocket.getInetAddress();
-
-				String ipRemota = localizacion.getHostAddress();
-
-				System.out.println("Conexión entrante desde la IP: " + ipRemota);
-
 				ObjectInputStream paquete_datos = new ObjectInputStream(misocket.getInputStream());
 
 				paquete_recibido = (PaqueteEnvio) paquete_datos.readObject();
@@ -78,10 +75,10 @@ class MarcoServidor extends JFrame implements Runnable{
 				nick = paquete_recibido.getNickName();
 
 				ip = paquete_recibido.getIp();
-				
-				System.out.println(ip);
 
 				mensaje = paquete_recibido.getMensaje();
+
+				if(!mensaje.equals(" online")) {
 
 				areatexto.append("\n" + nick + ": " + mensaje + " para " + ip);
 
@@ -96,6 +93,34 @@ class MarcoServidor extends JFrame implements Runnable{
 				enviaDestinatario.close();
 
 				misocket.close();
+
+				} else {
+
+					InetAddress localizacion = misocket.getInetAddress();
+
+					String ipRemota = localizacion.getHostAddress();
+
+					lista_ip.add(ipRemota);
+
+					paquete_recibido.setLista_ip(lista_ip);
+
+					for(String ip2 : lista_ip) {
+
+						Socket enviaDestinatario = new Socket(ip2, 9090);
+
+						ObjectOutputStream paqueteReenvio = new ObjectOutputStream(enviaDestinatario.getOutputStream());
+
+						paqueteReenvio.writeObject(paquete_recibido);
+
+						paqueteReenvio.close();
+
+						enviaDestinatario.close();
+
+						misocket.close();
+
+					}
+
+				}
 
 			}
 

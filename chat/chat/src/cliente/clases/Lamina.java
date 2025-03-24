@@ -1,5 +1,6 @@
 package cliente.clases;
 
+
 import eventos.*;
 
 import javax.swing.JComboBox;
@@ -9,18 +10,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
 import javax.swing.JButton;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
+
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.io.ObjectInputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -32,7 +26,6 @@ public class Lamina extends JPanel implements Runnable{
 
     private String nickName;
     private JTextArea mensaje;
-    private JLabel l_nickName;
     private JComboBox<String> lista_ips;
     private JTextArea campo_chat;
     private JButton b_enviar;
@@ -66,7 +59,7 @@ public class Lamina extends JPanel implements Runnable{
         JScrollPane scrollPane = new JScrollPane(campo_chat);
         scrollPane.setPreferredSize(new Dimension(340, 350)); 
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		//scrollPane.setMinimumSize(new Dimension(340, 350));
+        //scrollPane.setMinimumSize(new Dimension(340, 350));
 
         mensaje = new JTextArea(3,26);
         mensaje.setLineWrap(true);
@@ -207,3 +200,4 @@ public class Lamina extends JPanel implements Runnable{
     }
     
 }
+

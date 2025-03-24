@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -48,12 +50,20 @@ class MarcoCliente extends JFrame{
 		
 		setVisible(true);
 
-		addWindowListener(new EnvioOnline());
+		addWindowListener(new EnvioOnline(milamina));
 	}	
 	
 }
 
 class EnvioOnline extends WindowAdapter{
+
+	private JPanel milamina;
+
+	public EnvioOnline(JPanel milamina){
+
+		this.milamina = milamina;
+		
+	}
 	
 	public void windowOpened(WindowEvent e) {
 		
@@ -61,7 +71,9 @@ class EnvioOnline extends WindowAdapter{
 			
 			Socket misocket = new Socket("192.168.100.235",9999);
 
-			PaqueteEnvio datos = new PaqueteEnvio(" online", "192.168.100.235", "192.168.100.235");
+			InetAddress mi_ip = InetAddress.getLocalHost();
+
+			PaqueteEnvio datos = new PaqueteEnvio(" online", ((LaminaMarcoCliente) milamina).getNickName(), mi_ip.getHostAddress());
 			
 			ObjectOutputStream paquete_datos = new ObjectOutputStream(misocket.getOutputStream());
 
@@ -82,21 +94,17 @@ class EnvioOnline extends WindowAdapter{
 
 class LaminaMarcoCliente extends JPanel implements Runnable{
 	
-	public LaminaMarcoCliente(){
-
-		String nickNames = JOptionPane.showInputDialog("Elije tu NickName");
+	private String nickNames; 
 	
+	public LaminaMarcoCliente(){
+	
+		nickNames = JOptionPane.showInputDialog("Nick: ");
+
 		JLabel texto=new JLabel(" Online: ");
 
 		nickName = new JLabel(nickNames);
 
 		ip = new JComboBox<>();
-
-		ip.addItem("Loli");
-
-		ip.addItem("Mauro");
-
-		ip.addItem("Pedro");
 
 		add(new JLabel("Nick: "));
 
@@ -145,6 +153,12 @@ class LaminaMarcoCliente extends JPanel implements Runnable{
 	
 	private JButton miboton;
 
+	public String getNickName() {
+		
+		return nickNames;
+		
+	}
+
 	public void run(){
 		
 		try {
@@ -163,15 +177,48 @@ class LaminaMarcoCliente extends JPanel implements Runnable{
 				
 				paquete = (PaqueteEnvio) flujo_entrada.readObject();
 
-				StyledDocument doc = campo_chat.getStyledDocument();
+				if(!paquete.getMensaje().equals(" online")) {
+					
+					StyledDocument doc = campo_chat.getStyledDocument();
 
-				SimpleAttributeSet otherStyle = new SimpleAttributeSet();
+					SimpleAttributeSet otherStyle = new SimpleAttributeSet();
 
-        		StyleConstants.setForeground(otherStyle, Color.RED);  
+					StyleConstants.setForeground(otherStyle, Color.RED);  
+					
+					doc.insertString(doc.getLength(), "\n" + paquete.getNickName() + ": " + paquete.getMensaje(), otherStyle);
+				}
 				
-				doc.insertString(doc.getLength(), "\n" + paquete.getNickName() + ": " + paquete.getMensaje(), otherStyle);
+				else {
+
+					ip.removeAllItems();
+
+					ArrayList<String> lista_ip = new ArrayList<String>();
+
+					lista_ip = paquete.getLista_ip();
+
+					for (String ips : lista_ip) {
+
+						if(ips.equals(nickNames)) {
+							continue;
+						}
+						
+						ip.addItem(ips);
+					}
+					
+					StyledDocument doc = campo_chat.getStyledDocument();
+
+					SimpleAttributeSet otherStyle = new SimpleAttributeSet();
+
+					StyleConstants.setForeground(otherStyle, Color.RED);  
+					
+							
+				}
+
 				
 				cliente.close();
+
+				servidor.close();
+
 			}	
 			
 		} catch (Exception e) {
@@ -230,6 +277,8 @@ class LaminaMarcoCliente extends JPanel implements Runnable{
 class PaqueteEnvio implements Serializable{
 	
 	private String mensaje, nickName, ip;
+
+	private ArrayList<String> lista_ip = new ArrayList<String>();
 	
 	public PaqueteEnvio(String mensaje, String nickName, String ip) {
 		
@@ -271,7 +320,7 @@ class PaqueteEnvio implements Serializable{
 			case "Loli":
 				return "192.168.100.232";
 			case "Mauro":
-				return "192.168.100.235";
+				return "192.168.100.78";
 			case "Pedro":
 				return "192.168.100.234";
 			default:
@@ -282,6 +331,18 @@ class PaqueteEnvio implements Serializable{
 	public void setIp(String ip) {
 		
 		this.ip = ip;
+		
+	}
+
+	public ArrayList<String> getLista_ip() {
+		
+		return lista_ip;
+		
+	}
+
+	public void setLista_ip(ArrayList<String> lista_ip) {
+		
+		this.lista_ip = lista_ip;
 		
 	}
 	
